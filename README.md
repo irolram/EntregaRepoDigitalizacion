@@ -5,3 +5,11 @@ Al ejecutar el script, se pedirá ingresar:
 1- Nombre de la ciudad (Ejemplo: Madrid).
 2- Fecha en formato YYYY-MM-DD (Opcional, por defecto usa la fecha actual).
 3- Años atrás a comparar (Ejemplo: 5).
+
+
+
+
+Esta es la key de la API y la url, sé que no se debe hacer pero para probar el programa es necesario
+API_KEY=MNMPDJWAHGB5GMM8KYDFJ4BW8
+BASE_URL=https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline
+
