@@ -10,6 +10,5 @@ Al ejecutar el script, se pedirá ingresar:
 
 
 Esta es la key de la API y la url, sé que no se debe hacer público pero para probar el programa es necesario
-API_KEY=MNMPDJWAHGB5GMM8KYDFJ4BW8
-BASE_URL=https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline
+
 
