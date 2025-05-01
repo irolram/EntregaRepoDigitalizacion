@@ -25,7 +25,7 @@ python-dotenv – For securely managing environment variables.
 Visual Crossing Weather API – The source for historical and current weather data.
 ---
 
-## Instalación y configuración
+## Installation and configuration
 
 ### 1. Clone the repository:
 
@@ -33,10 +33,10 @@ Visual Crossing Weather API – The source for historical and current weather da
 git clone https://github.com/irolram/EntregaRepoDigitalizacion.git
 cd comparador-clima
 
-## 2. Instala las dependencias necesarias:
+## 2. Install the necessary dependencies:
 pip install -r requirements.txt
 
-## 3. Ejecuta el script:
+## 3. Run the script:
 
 python proyecto.py
 
