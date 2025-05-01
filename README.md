@@ -30,8 +30,8 @@ Con esta herramienta puedes comprobar, por ejemplo, si el 1 de mayo de 2025 en M
 
 ### 1. Clona el repositorio:
 
-bash
-git clone https://github.com/tuusuario/comparador-clima.git
+
+git clone https://github.com/irolram/EntregaRepoDigitalizacion.git
 cd comparador-clima
 
 ## 2. Instala las dependencias necesarias:
