@@ -38,7 +38,7 @@ pip install -r requirements.txt
 
 ## 3. Ejecuta el script:
 
-python clima.py
+python proyecto.py
 
 ## Usage
 When running the script, you will be prompted to enter:
