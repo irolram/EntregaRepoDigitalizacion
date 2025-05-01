@@ -1,34 +1,33 @@
 # Comparador Histórico de Clima
 
-Este proyecto es una herramienta en Python que permite comparar el clima actual de una ciudad con el clima registrado en la misma fecha hace una cierta cantidad de años. Se basa en la API de [Visual Crossing Weather](https://www.visualcrossing.com/) para obtener datos meteorológicos precisos tanto del presente como del pasado.
+This project is a Python-based tool that allows you to compare the current weather in a city with the weather recorded on the same date a certain number of years ago. It uses the Visual Crossing Weather API to retrieve accurate weather data from both the present and the past.
 
----
+## Motivation
+Climate change is one of the major concerns of our time, and many people — from everyday citizens to researchers — are interested in seeing how temperatures and weather conditions have evolved over the years. This project was created with the idea of offering a simple, educational, and useful tool that allows users to:
 
-## Motivación
+Analyze local climate trends: Is it really warmer today than it was five years ago in your city?
 
-El cambio climático es una de las principales preocupaciones de nuestro tiempo, y muchas personas —desde ciudadanos comunes hasta investigadores— están interesadas en observar cómo han cambiado las temperaturas y las condiciones meteorológicas a lo largo de los años. Este proyecto nace con la idea de ofrecer una herramienta simple, educativa y útil que permita:
+Spark scientific curiosity in students or weather enthusiasts.
 
-- **Analizar tendencias climáticas locales**: ¿Está realmente haciendo más calor hoy que hace cinco años en tu ciudad?
-- **Despertar la curiosidad científica** en estudiantes o aficionados a la meteorología.
-- **Ofrecer datos para proyectos de análisis o visualización**, sin necesidad de construir una infraestructura compleja.
-- **Proveer un recurso ligero y portable**, fácil de usar en terminales, entornos educativos o incluso como parte de otros sistemas más grandes.
+Provide data for analysis or visualization projects, without the need to build a complex infrastructure.
 
-Con esta herramienta puedes comprobar, por ejemplo, si el 1 de mayo de 2025 en Madrid ha sido más cálido que el 1 de mayo de 2015, y cuánta diferencia hay en temperatura y condiciones generales (nublado, soleado, lluvioso, etc.).
+Offer a lightweight and portable resource, easy to use in terminals, educational settings, or even as part of larger systems.
 
----
+With this tool, you can easily check, for example, whether May 1st, 2025 in Madrid was warmer than May 1st, 2015, and how much the temperature and general weather conditions (cloudy, sunny, rainy, etc.) differed.
 
-## Tecnologías utilizadas
+## Technologies Used
+Python 3.7+
 
-- **Python 3.7+**
-- **requests** – Para realizar solicitudes HTTP a la API de Visual Crossing.
-- **python-dotenv** – Para gestionar variables de entorno de forma segura.
-- **Visual Crossing Weather API** – Fuente de los datos meteorológicos históricos y actuales.
+requests – For making HTTP requests to the Visual Crossing API.
 
+python-dotenv – For securely managing environment variables.
+
+Visual Crossing Weather API – The source for historical and current weather data.
 ---
 
 ## Instalación y configuración
 
-### 1. Clona el repositorio:
+### 1. Clone the repository:
 
 
 git clone https://github.com/irolram/EntregaRepoDigitalizacion.git
