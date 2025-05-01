@@ -6,69 +6,82 @@ from dotenv import load_dotenv
 # Cargar variables de entorno
 load_dotenv()
 API_KEY = os.getenv("API_KEY")
-BASE_URL = os.getenv("BASE_URL")
+BASE_URL = "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline"
 
 def es_bisiesto(anio):
-    """Devuelve True si el año es bisiesto, False si no lo es."""
     return (anio % 4 == 0 and anio % 100 != 0) or (anio % 400 == 0)
 
 def ajustar_fecha_bisiesta(fecha, anios_atras):
-    """Ajusta la fecha si el año de destino no es bisiesto y el día es 29 de febrero."""
     fecha_original = datetime.datetime.strptime(fecha, "%Y-%m-%d")
     anio_destino = fecha_original.year - anios_atras
-
-    # Si la fecha original es 29 de febrero y el año de destino no es bisiesto, ajustamos a 28 de febrero
     if fecha_original.month == 2 and fecha_original.day == 29 and not es_bisiesto(anio_destino):
-        fecha_ajustada = datetime.date(anio_destino, 2, 28)
-    else:
-        fecha_ajustada = fecha_original.replace(year=anio_destino)
-
-    return fecha_ajustada.strftime("%Y-%m-%d")
+        return datetime.date(anio_destino, 2, 28).strftime("%Y-%m-%d")
+    return fecha_original.replace(year=anio_destino).strftime("%Y-%m-%d")
 
 def obtener_clima(ciudad, fecha):
-    """Obtiene el clima de una ciudad en una fecha específica usando Visual Crossing."""
-    if not API_KEY or not BASE_URL:
-        print(" Error: No se encontró la API Key o la BASE_URL. Verifica tu archivo .env")
-        return None
-
+    if not API_KEY:
+        return "❌ Falta la API_KEY"
     url = f"{BASE_URL}/{ciudad}/{fecha}?unitGroup=metric&key={API_KEY}&include=days&contentType=json"
-    
     try:
-        respuesta = requests.get(url)
-        respuesta.raise_for_status()  # Lanza un error si el código de estado es 4xx o 5xx
-        datos = respuesta.json()
-        if "days" in datos and datos["days"]:
-            return datos["days"][0]  # Retorna solo la info del día solicitado
-        else:
-            print(f"⚠️ No hay datos disponibles para {fecha}.")
-            return None
-    except requests.exceptions.RequestException as e:
-        print(f" Error al obtener los datos: {e}")
+        resp = requests.get(url)
+        resp.raise_for_status()
+        datos = resp.json()
+        return datos["days"][0] if "days" in datos else None
+    except:
         return None
 
-
-def comparar_clima(ciudad, fecha, anios_atras):
-    """Compara el clima de la fecha dada con la misma fecha en años anteriores, manejando años bisiestos."""
-    clima_actual = obtener_clima(ciudad, fecha)
-    fecha_pasada = ajustar_fecha_bisiesta(fecha, anios_atras)
-    clima_pasado = obtener_clima(ciudad, fecha_pasada)
-
-    if clima_actual and clima_pasado:
-        print(f"\n Ciudad: {ciudad} |  Fecha: {fecha}")
-        print(f" Temperatura actual ({fecha}): {clima_actual['temp']}°C | {clima_actual['conditions']}")
-        print(f" Hace {anios_atras} años ({fecha_pasada}): {clima_pasado['temp']}°C | {clima_pasado['conditions']}")
-        print(f" Diferencia de temperatura: {clima_actual['temp'] - clima_pasado['temp']}°C")
-    else:
-        print("⚠️ No se pudieron obtener los datos para la comparación.")
-
-# --- Ejecución ---
-if __name__ == "__main__":
-    ciudad = input(" Ingrese la ciudad: ") or "monesterio"
-    fecha = input(" Ingrese la fecha (YYYY-MM-DD) o presione Enter para usar la de hoy: ") or datetime.date.today().strftime("%Y-%m-%d")
-    anios_atras = input(" ¿Cuántos años atrás quieres comparar? (Por defecto 1 año): ") or "1"
+def comparar_clima(ciudad, fecha, anios):
+    try:
+        anios = int(anios)
+    except ValueError:
+        return "❌ El número de años debe ser un valor entero."
 
     try:
-        anios_atras = int(anios_atras)
-        comparar_clima(ciudad, fecha, anios_atras)
-    except ValueError:
-        print(" Error: La cantidad de años debe ser un número entero.")
+        clima_actual = obtener_clima(ciudad, fecha)
+        fecha_pasada = ajustar_fecha_bisiesta(fecha, anios)
+        clima_pasado = obtener_clima(ciudad, fecha_pasada)
+
+        if clima_actual and clima_pasado:
+            diferencia = clima_actual['temp'] - clima_pasado['temp']
+            return (
+                f"🌍 Ciudad: {ciudad}\n"
+                f"📅 Fecha actual: {fecha} — {clima_actual['temp']}°C | {clima_actual['conditions']}\n"
+                f"📅 Hace {anios} años ({fecha_pasada}): {clima_pasado['temp']}°C | {clima_pasado['conditions']}\n"
+                f"🔺 Diferencia: {diferencia:.1f}°C"
+            )
+        else:
+            return "⚠️ No se pudo obtener la información meteorológica. Verifica la ciudad o la fecha."
+    except Exception as e:
+        return f"❗ Error inesperado: {str(e)}"
+
+
+# Si se está ejecutando en un entorno Gradio, lanzamos la interfaz web
+try:
+    import gradio as gr
+
+    # Interfaz con Gradio
+    def gradio_interface(ciudad, fecha, anios_atras):
+        return comparar_clima(ciudad, fecha, anios_atras)
+
+    demo = gr.Interface(
+        fn=gradio_interface,
+        inputs=[
+            gr.Textbox(label="Ciudad", placeholder="Ej: Madrid"),
+            gr.Textbox(label="Fecha (YYYY-MM-DD)", value=datetime.date.today().strftime("%Y-%m-%d")),
+            gr.Textbox(label="Años atrás", value="1"),
+        ],
+        outputs="text",
+        title="🌤️ Comparador de Clima Histórico",
+        description="Compara el clima actual con el de la misma fecha hace X años usando Visual Crossing API.",
+    )
+
+    if __name__ == "__main__":
+        demo.launch()
+
+except ImportError:
+    # Si no está usando Gradio, ejecutamos en la terminal
+    if __name__ == "__main__":
+        ciudad = input("Ingrese la ciudad: ")
+        fecha = input("Ingrese la fecha (YYYY-MM-DD) o presione Enter para usar la de hoy: ") or datetime.date.today().strftime("%Y-%m-%d")
+        anios_atras = input("¿Cuántos años atrás quieres comparar? (Por defecto 1 año): ") or "1"
+        print(comparar_clima(ciudad, fecha, anios_atras))
