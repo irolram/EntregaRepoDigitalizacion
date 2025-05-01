@@ -40,12 +40,16 @@ pip install -r requirements.txt
 
 python clima.py
 
-# USO
+## Usage
+When running the script, you will be prompted to enter:
 
-Al ejecutar el script, se solicitarán:
-Ciudad (por ejemplo: Madrid, Buenos Aires, Monesterio)
-Fecha en formato YYYY-MM-DD (puedes dejarlo en blanco para usar la fecha de hoy)
-Cantidad de años atrás a comparar (por defecto es 1)
+A city (e.g., Madrid, Buenos Aires, Monesterio)
+
+A date in YYYY-MM-DD format (you can leave it blank to use today's date)
+
+The number of years back you want to compare (default is 1)
+
+
 
 Ejemplo de ejecución:
 
