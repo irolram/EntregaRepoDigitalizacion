@@ -9,9 +9,30 @@ API_KEY = os.getenv("API_KEY")
 BASE_URL = "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline"
 
 def es_bisiesto(anio):
+
+    """
+    Verifica si un año es bisiesto.
+
+    Args:
+        anio (int): Año a comprobar.
+
+    Returns:
+        bool: True si es bisiesto, False en caso contrario.
+    """
     return (anio % 4 == 0 and anio % 100 != 0) or (anio % 400 == 0)
 
 def ajustar_fecha_bisiesta(fecha, anios_atras):
+    """
+    Ajusta una fecha bisiesta (29 de febrero) si el año destino no es bisiesto.
+
+    Args:
+        fecha (str): Fecha original en formato 'YYYY-MM-DD'.
+        anios_atras (int): Cantidad de años hacia atrás.
+
+    Returns:
+        str: Fecha ajustada en formato 'YYYY-MM-DD'.
+    """
+    
     fecha_original = datetime.datetime.strptime(fecha, "%Y-%m-%d")
     anio_destino = fecha_original.year - anios_atras
     if fecha_original.month == 2 and fecha_original.day == 29 and not es_bisiesto(anio_destino):
@@ -19,6 +40,17 @@ def ajustar_fecha_bisiesta(fecha, anios_atras):
     return fecha_original.replace(year=anio_destino).strftime("%Y-%m-%d")
 
 def obtener_clima(ciudad, fecha):
+    """
+    Obtiene los datos meteorológicos para una ciudad y una fecha usando la API de Visual Crossing.
+
+    Args:
+        ciudad (str): Ciudad de interés.
+        fecha (str): Fecha en formato 'YYYY-MM-DD'.
+
+    Returns:
+        dict | str | None: Diccionario con los datos del clima, o mensaje de error si falta la clave API, o None si la consulta falla.
+    """
+
     if not API_KEY:
         return "❌ Falta la API_KEY"
     url = f"{BASE_URL}/{ciudad}/{fecha}?unitGroup=metric&key={API_KEY}&include=days&contentType=json"
@@ -31,6 +63,17 @@ def obtener_clima(ciudad, fecha):
         return None
 
 def comparar_clima(ciudad, fecha, anios):
+    """
+    Compara el clima actual con el de la misma fecha hace una cantidad de años atrás.
+
+    Args:
+        ciudad (str): Nombre de la ciudad.
+        fecha (str): Fecha en formato 'YYYY-MM-DD'.
+        anios (int | str): Cantidad de años hacia atrás para comparar.
+
+    Returns:
+        str: Resultado de la comparación en formato legible.
+    """
     try:
         anios = int(anios)
     except ValueError:
@@ -61,6 +104,7 @@ try:
 
     # Interfaz con Gradio
     def gradio_interface(ciudad, fecha, anios_atras):
+        
         return comparar_clima(ciudad, fecha, anios_atras)
 
     demo = gr.Interface(
