@@ -1,10 +1,10 @@
-## ❓ FAQ
+## FAQ
 
-**¿Qué pasa si no tengo una API Key?**  
-Se mostrará un error diciendo que falta la clave en `.env`.
+**What if I don't have an API key?**  
+An error will be shown indicating the key is missing in `.env`.
 
-**¿Funciona sin Gradio?**  
-Sí, puedes usarlo por consola si Gradio no está instalado.
+**Does it work without Gradio?**  
+Yes, you can use it in terminal mode if Gradio is not installed.
 
-**¿Qué pasa con el 29 de febrero en años no bisiestos?**  
-El programa ajusta automáticamente la fecha al 28 de febrero si es necesario.
+**What happens with February 29 in non-leap years?**  
+The app automatically adjusts the date to February 28 if needed.

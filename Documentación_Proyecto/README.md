@@ -1,15 +1,14 @@
-# 🌤️ Comparador de Clima Histórico
+# Historical Weather Comparator
 
-Aplicación Python que compara el clima actual con el de años anteriores usando la API de Visual Crossing. Incluye interfaz web con Gradio y soporte para fechas bisiestas.
+Python app that compares current weather with the same date in previous years using the Visual Crossing API. Includes a Gradio web interface and leap year support.
 
 ---
 
-## 📚 Índice
+## Index
 
-- [Introducción](#introducción)
-- [Instalación](#instalación)
-- [Uso](#uso)
-- [Configuración](#configuración)
-- [Desarrollo](#desarrollo)
+- [Introduction](#introduction)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Development](#development)
 - [Changelog](#changelog)
 - [FAQ](#faq)
