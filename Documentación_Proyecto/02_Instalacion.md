@@ -12,9 +12,3 @@ cd clima-comparador
 ```bash
 pip install -r requirements.txt
 ```
-
-3. Crea un archivo `.env` en la raíz con tu clave de API:
-
-```env
-API_KEY=tu_clave_de_visualcrossing
-```
